@@ -1,11 +1,14 @@
-import fp from 'fastpress';
+import Fastpress from 'fastpress';
+const app = new Fastpress();
 
-fp.get('/cat', (req, res) => {
+app.get('/cat', (req, res) => {
   console.log('meow');
 });
 
-fp.post('/dog', (req, res) => {
+app.post('/dog', (req, res) => {
   console.log(req.body);
 });
 
-fp.createServer(8080);
+app.listen(8080, () => {
+  console.log('Server listening on ' + HOST + ':' + _port);  
+});
