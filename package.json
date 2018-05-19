@@ -1,10 +1,10 @@
 {
   "name": "fastpress",
-  "version": "1.0.5",
+  "version": "1.0.12",
   "description": "A blazing fast and simple HTTP library for NodeJS",
-  "main": "lib/fastpress.min.js",
+  "main": "dist/fastpress.min.js",
   "scripts": {
-    "build": "webpack --env build",
+    "build": "rollup src/fastpress.js --format cjs --file dist/fastpress.min.js",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "test:watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
@@ -19,6 +19,7 @@
     "babel-loader": "7.0.0",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-preset-es2015": "6.24.1",
+
     "chai": "3.5.0",
     "eslint": "3.19.0",
     "eslint-loader": "1.7.1",

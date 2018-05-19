@@ -1,6 +1,6 @@
 import net from 'net';
 import HTTPParser from './http-parser';
-import { Response } from './response';
+import Response from './response';
 import { DEFAULT_HOSTNAME, DEFAULT_PORT } from './constants';
 
 export default class Fastpress {
@@ -17,7 +17,8 @@ export default class Fastpress {
     // Create a server instance, and chain the listen function to it
     // The function passed to net.createServer() becomes the event handler for the 'connection' event
     // The sock object the callback function receives UNIQUE for each connection
-    net.createServer((sock) => {
+    console.log(net);
+    const server = net.createServer((sock) => {
       let res = new Response(sock);
 
       // We have a connection - a socket object is assigned to the connection automatically
@@ -35,7 +36,13 @@ export default class Fastpress {
       sock.on('close', (data) => {
         // console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
       });
-    }).listen(_port, this.host);
+    });
+    server.on('error', (err) => {
+      throw err;
+    });
+    server.listen(_port, () => {
+      console.log('Server bound');
+    });
     callback();
   };
 

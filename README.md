@@ -4,7 +4,7 @@ A blazing fast and simple HTTP library for NodeJS
 
 ## Features
 
-* ONLY GET and POST endpoints
+* Only supports GET and POST Requests
 * Webpack 3 based.
 * ES6 as a source.
 * Exports in a [umd](https://github.com/umdjs/umd) format so your library works everywhere.
@@ -16,17 +16,21 @@ A blazing fast and simple HTTP library for NodeJS
 ### An example of using fastpress
 
 ```js
-import fp from 'fastpress';
+const fastpress = require('fastpress');
+const app = new fastpress();
 
-fp.get('/cat', (req, res) => {
-  console.log('meow');
+app.get('/cat', (req, res) => {
+  res.send('meow!')
 });
 
-fp.post('/dog', (req, res) => {
+app.post('/dog', (req, res) => {
   console.log(req.body);
+  res.send('bark!')
 });
 
-fp.createServer(8080);
+app.listen(8080, () => {
+  console.log('Server listening on ' + HOST + ':' + _port);  
+});
 ```
 
 ## Readings

@@ -25,6 +25,6 @@ const parseHTTPRequest = (data) => {
   return parsedReq;
 };
 
-export {
+export default {
   parseHTTPRequest
 };
