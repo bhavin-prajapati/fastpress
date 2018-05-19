@@ -7,7 +7,7 @@ export default class Response {
     this.status = s;
   }
 
-  send() {
+  send(body) {
     this.socket.write(`HTTP/1.x ${this.status} OK
         Transfer-Encoding: chunked
         Date: Sat, 28 Nov 2009 04:36:25 GMT

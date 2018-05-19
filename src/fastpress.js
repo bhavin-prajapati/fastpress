@@ -17,7 +17,6 @@ export default class Fastpress {
     // Create a server instance, and chain the listen function to it
     // The function passed to net.createServer() becomes the event handler for the 'connection' event
     // The sock object the callback function receives UNIQUE for each connection
-    console.log(net);
     const server = net.createServer((sock) => {
       let res = new Response(sock);
 
@@ -27,21 +26,20 @@ export default class Fastpress {
       sock.on('data', (data) => {
         let req = HTTPParser.parseHTTPRequest(data.toString());
         let route = req.method + ' ' + req.url.split('?')[0];
-
         console.log(route);
         this.routes[route] ? this.routes[route](req, res) : null;
       });
 
       // Add a 'close' event handler to this instance of socket
       sock.on('close', (data) => {
-        // console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+        console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
       });
     });
     server.on('error', (err) => {
       throw err;
     });
-    server.listen(_port, () => {
-      console.log('Server bound');
+    server.listen(_port, this.host, () => {
+      console.log(`Server started listening to port ${_port}`);
     });
     callback();
   };
