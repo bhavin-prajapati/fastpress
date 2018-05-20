@@ -4,7 +4,7 @@
   "description": "A sample app using fastpress",
   "dependencies": {
     "babel-preset-node6": "^11.0.0",
-    "fastpress": "^1.0.12"
+    "fastpress": "^1.0.14"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

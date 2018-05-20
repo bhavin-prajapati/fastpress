@@ -1,4 +1,5 @@
-const parseHTTPRequest = (data) => {
+const parseHTTPRequest = (request) => {
+  let data = request.toString();
   let parsedReq = {};
   let req = data.split('\r\n\r\n');
   let header = req[0];

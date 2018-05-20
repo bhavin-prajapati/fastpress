@@ -1,6 +1,6 @@
 import net from 'net';
 import HTTPParser from './http-parser';
-import Response from './response';
+import Response from './Response';
 import { DEFAULT_HOSTNAME, DEFAULT_PORT } from './constants';
 
 export default class Fastpress {
@@ -20,24 +20,31 @@ export default class Fastpress {
     const server = net.createServer((sock) => {
       let res = new Response(sock);
 
+      sock.on('end', () => {
+        console.log('client disconnected');
+      });
+
       // We have a connection - a socket object is assigned to the connection automatically
       // console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
       // Add a 'data' event handler to this instance of socket
-      sock.on('data', (data) => {
-        let req = HTTPParser.parseHTTPRequest(data.toString());
+      sock.on('data', (request) => {
+        let req = HTTPParser.parseHTTPRequest(request);
         let route = req.method + ' ' + req.url.split('?')[0];
+
         console.log(route);
         this.routes[route] ? this.routes[route](req, res) : null;
       });
 
       // Add a 'close' event handler to this instance of socket
       sock.on('close', (data) => {
-        console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
       });
     });
+
     server.on('error', (err) => {
       throw err;
     });
+
     server.listen(_port, this.host, () => {
       console.log(`Server started listening to port ${_port}`);
     });
